@@ -8,7 +8,10 @@ module.exports = {
       // },
       stylus: {
         // 'resolve url': true,
-        import: [path.resolve(__dirname, './src/assets/styles/varibles.styl')]
+        import: [
+          path.resolve(__dirname, './src/assets/styles/varibles.styl'),
+          path.resolve(__dirname, './src/assets/styles/mixins.styl')
+        ]
       }
     }
   }
