@@ -1,15 +1,14 @@
 <template>
   <div class="icons">
-      <swiper>
-        <swiper-slide v-for="(page,index) of pages" :key="index">
-          <div class="icon" v-for="item of page" :key="item.name">
-            <div class="icon-img-wrap">
-              <img class="icon-img" :src="item.imgUrl" alt="image"> 
-            </div>
-            <p class="icon-desc">{{item.title}}</p>
+    <swiper :options="swiperOption">
+      <swiper-slide v-for="(page,index) of pages" :key="index">
+        <div class="icon" v-for="item of page" :key="item.title">
+          <div class="icon-img-wrap">
+            <img class="icon-img" :src="item.imgUrl" alt="image"> 
           </div>
-        </swiper-slide>
-        
+          <p class="icon-desc">{{item.title}}</p>
+        </div>
+      </swiper-slide>
       <!-- Optional controls -->
       <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
@@ -19,69 +18,24 @@
 <script>
 export default {
   name: 'HomeIcons',
+  props: {
+    list: Array
+  },
   data() {
     return {
-      swiperOption: {},
-      iconList: [
-        {
-          title: '景点门票',
-          imgUrl:
-            'http://img1.qunarzz.com/piao/fusion/1803/95/f3dd6c383aeb3b02.png'
-        },
-        {
-          title: '游乐场',
-          imgUrl:
-            'http://img1.qunarzz.com/piao/fusion/1803/95/8246f27355943202.png'
-        },
-        {
-          title: '重庆必游',
-          imgUrl:
-            'http://img1.qunarzz.com/piao/fusion/1804/ff/fdf170ee89594b02.png'
-        },
-        {
-          title: '打卡圣地',
-          imgUrl:
-            'https://img1.qunarzz.com/piao/fusion/1803/20/831d62d2e1c7be02.png'
-        },
-        {
-          title: '一日游',
-          imgUrl:
-            'http://img1.qunarzz.com/piao/fusion/1804/5a/13ceb38dcf262f02.png'
-        },
-        {
-          title: '两江夜游',
-          imgUrl:
-            'http://img1.qunarzz.com/piao/fusion/1803/89/55083b0f1951f302.png'
-        },
-        {
-          title: '神秘武隆',
-          imgUrl:
-            'http://img1.qunarzz.com/piao/fusion/1803/96/c70f1e85ae4a4f02.png'
-        },
-        {
-          title: '泡温泉',
-          imgUrl:
-            'http://img1.qunarzz.com/piao/fusion/1803/ab/6f7d6e44963c9302.png'
-        },
-        {
-          title: '稻城亚丁',
-          imgUrl:
-            'http://img1.qunarzz.com/piao/fusion/1805/57/1e29afd06f881102.png'
-        },
-        {
-          title: '全部玩乐',
-          imgUrl:
-            'http://img1.qunarzz.com/piao/fusion/1803/80/416c6ab3368d1f02.png'
+      swiperOption: {
+        pagination: {
+          el: '.swiper-pagination'
         }
-      ]
+      }
     }
   },
   computed: {
     pages() {
       const pages = []
-      this.iconList.forEach((item, index) => {
+      this.list.forEach((item, index) => {
         const page = Math.floor(index / 8)
-        if(!pages[page]){
+        if (!pages[page]) {
           pages[page] = []
         }
         pages[page].push(item)
@@ -95,13 +49,15 @@ export default {
 <style lang="stylus" scoped>
 .icons >>> .swiper-container {
   height: 0;
-  padding-bottom: 50%;
+  padding-bottom: 53%;
+}
+
+.icons >>> .swiper-pagination {
+  bottom: 0;
 }
 
 .icons {
-  overflow: hidden;
-  height: 0;
-  padding-bottom: 50%;
+  margin-top: 0.1rem;
 
   .icon {
     position: relative;
@@ -136,7 +92,7 @@ export default {
       line-height: 0.44rem;
       color: $darkTextColor;
       text-align: center;
-      ellipsis()
+      ellipsis();
     }
   }
 }
