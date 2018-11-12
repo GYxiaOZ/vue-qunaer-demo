@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view/>
+    <keep-alive exclude="Detail">
+      <router-view/>
+    </keep-alive>
   </div>
 </template>
 
@@ -27,6 +29,9 @@ p {
   margin: 0;
 }
 button {
+  border: none;
+}
+input {
   border: none;
 }
 </style>

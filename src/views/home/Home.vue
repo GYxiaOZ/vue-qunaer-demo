@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HomeHeader :city="lastCity"></HomeHeader>
+    <HomeHeader></HomeHeader>
     <HomeSwiper :list="swiperList"></HomeSwiper>
     <HomeIcons :list="iconList"></HomeIcons>
     <HomeRecommend :list="recommendList"></HomeRecommend>
@@ -10,6 +10,7 @@
 
 <script>
 import axios from 'axios'
+import {mapState} from 'vuex'
 import HomeHeader from './components/Header'
 import HomeSwiper from './components/Swiper'
 import HomeIcons from './components/Icons'
@@ -33,18 +34,28 @@ export default {
       weekendList: []
     }
   },
+  computed:{
+    ...mapState(['city'])
+  },
   mounted() {
+    this.lastCity = this.city
     this.getHomeInfo()
+  },
+  // 使用了keepalive增加的生命周期函数
+  activated () {
+    if (this.lastCity !== this.city) {
+      this.lastCity = this.city
+      this.getHomeInfo()
+    }
   },
   methods: {
     getHomeInfo() {
-      axios.get('/api/index.json').then(this.getHomeInfoSucc)
+      axios.get(`/api/index.json?city=${this.city}`).then(this.getHomeInfoSucc)
     },
     getHomeInfoSucc(response) {
       const res = response.data
       if (res.res === 0 && res.data) {
         const data = res.data
-        this.lastCity = data.city
         this.swiperList = data.swiperList
         this.iconList = data.iconsList
         this.recommendList = data.recommendList

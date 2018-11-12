@@ -7,18 +7,21 @@
       <i class="iconfont">&#xe632;</i>
       输入城市景点/游玩主题
     </div>
-    <div class="header-right">
-      {{city}}
-      <i class="iconfont">&#xe64a;</i>
-    </div>
+    <router-link to="/city">
+      <div class="header-right">
+        {{this.city}}
+        <i class="iconfont">&#xe64a;</i>
+      </div>
+    </router-link>
   </div>
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
   name: 'HomeHeader',
-  props: {
-    city: String
+  computed:{
+    ...mapState(['city'])
   }
 }
 </script>
