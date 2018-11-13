@@ -13,10 +13,12 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { mapState } from 'vuex'
 import DetailBanner from './components/Banner'
 import DetailHeader from './components/Header'
 import DetailList from './components/List'
-import axios from 'axios'
+
 export default {
   name: 'Detail',
   components: {
@@ -32,9 +34,12 @@ export default {
       list: []
     }
   },
+  computed: {
+    ...mapState([ 'baseUrl'])
+  },
   methods: {
     getDetailInfo () {
-      axios.get('/api/detail.json', {
+      axios.get(`${this.baseUrl}api/detail.json`, {
         params: {
           id: this.$route.params.id
         }

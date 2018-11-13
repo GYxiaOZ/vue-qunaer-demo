@@ -16,6 +16,7 @@
 
 <script>
 import axios from 'axios'
+import { mapState } from 'vuex'
 import CityHeader from './components/Header'
 import CitySearch from './components/Search'
 import CityList from './components/List'
@@ -35,9 +36,12 @@ export default {
       letter: ''
     }
   },
+  computed: {
+    ...mapState([ 'baseUrl'])
+  },
   methods: {
     getCityInfo () {
-      axios.get('/api/city.json')
+      axios.get(`${this.baseUrl}api/city.json`)
         .then(this.handleGetCityInfoSucc)
     },
     handleGetCityInfoSucc (res) {
